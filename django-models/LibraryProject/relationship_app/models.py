@@ -11,12 +11,12 @@ class Author(models.Model):
         return self.name
 
 # Book Model
-class Book(models.Model):
-    title = models.CharField(max_length=200)
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+#class Book(models.Model):
+#    title = models.CharField(max_length=200)
+#    author = models.ForeignKey(Author, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return f"{self.title} by {self.author.name}"
+#    def __str__(self):
+#        return f"{self.title} by {self.author.name}"
 
 # Library Model
 class Library(models.Model):
@@ -58,3 +58,16 @@ def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
 
+class Book(models.Model):
+    title = models.CharField(max_length=200)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.title} by {self.author.name}"
+
+    class Meta:
+        permissions = [
+            ("can_add_book", "Can add book"),
+            ("can_change_book", "Can change book"),
+            ("can_delete_book", "Can delete book"),
+        ]
