@@ -1,12 +1,10 @@
-#New
-# LibraryProject/bookshelf/forms.py
 from django import forms
 from .models import Book
 
 class ExampleForm(forms.ModelForm):
     class Meta:
         model = Book
-        fields = ['title', 'author', 'publication_year']  # Adjust these fields as per your model
+        fields = ['title', 'author', 'publication_year'] 
 
     # You can add custom validation here if needed
     def clean_title(self):
