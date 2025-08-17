@@ -15,6 +15,19 @@ class PostListView(ListView):
     context_object_name = "posts"
     ordering = ["-published_date"]  # newest first
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        query = self.request.GET.get("q")
+        if query:
+            queryset = Post.objects.filter(
+                title__icontains=query
+            ) | Post.objects.filter(
+                content__icontains=query
+            ) | Post.objects.filter(
+                tags__name__icontains=query
+            )
+        return queryset.distinct()
+
 
 class PostDetailView(DetailView):
     model = Post
